@@ -39,19 +39,20 @@ class Fishbowl(object):
 			exit("Maximum fishbowl size is 50")
 		# create random start for all fishes
 		self.fishes = [Fish(self.size, self.nteams) for _ in range(self.nfishes * self.nteams)]
+		self.fish_symbol = "£"
 
 	def draw(self):
 		bowl = []
 		# create fishbowl
 		for q in range(self.size + 1):
 			for t in range(self.size + 1):
-				bowl.append(" ")
+				bowl.append(" "*len(self.fish_symbol))
 				if q == 0 or q == self.size or t == 0 or t == self.size:
-					bowl.append(Fore.WHITE + "+")
+					bowl.append(Fore.WHITE + "+" + " "*(len(self.fish_symbol)-1))
 				elif [q, t] in [fish.location for fish in self.fishes]:
-					bowl.append([fish.color_code for fish in self.fishes if fish.location == [q, t]][0] + "€")
+					bowl.append([fish.color_code for fish in self.fishes if fish.location == [q, t]][0] + self.fish_symbol)
 				else:
-					bowl.append(" ")
+					bowl.append(" "*len(self.fish_symbol))
 			bowl.append("\n")
 		# plot fishbowl
 		os.system("cls")
@@ -81,5 +82,5 @@ class Fishbowl(object):
 
 if __name__=="__main__":
 
-	bowl = Fishbowl(nfishes = 20, nteams = 4, size= 30)
+	bowl = Fishbowl(nfishes = 50, nteams = 4, size= 30)
 	bowl.animate()
